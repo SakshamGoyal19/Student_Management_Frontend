@@ -3,12 +3,18 @@ package com.sagar.student_management_system.bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
+@Document()
 public class Student {
 	
 	@Id
 	private String id;
 	private String name, password, gender, branch, mail, course;
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", password=" + password + ", gender=" + gender + ", branch="
+				+ branch + ", mail=" + mail + ", course=" + course + "]";
+	}
 
 	public String getPassword() {
 		return password;

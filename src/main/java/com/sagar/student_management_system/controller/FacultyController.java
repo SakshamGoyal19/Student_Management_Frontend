@@ -3,6 +3,7 @@ package com.sagar.student_management_system.controller;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import com.sagar.student_management_system.service.FacultyService;
 
 @RestController
 @RequestMapping("/faculty")
+@CrossOrigin("*")
 public class FacultyController {
 	
 	@Autowired
@@ -34,19 +36,19 @@ public class FacultyController {
 	}
 	
 	@PostMapping()
-	public String addFaculty(@RequestBody Faculty faculty) {
+	public boolean addFaculty(@RequestBody Faculty faculty) {
 		
 		return service.addFaculty(faculty);
 	}
 	
 	@PutMapping()
-	public String updateFaculty(@RequestBody Faculty faculty) {
+	public boolean updateFaculty(@RequestBody Faculty faculty) {
 		
 		return service.updateFaculty(faculty);
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteFaculty(@PathVariable String id) {
+	public boolean deleteFaculty(@PathVariable String id) {
 		
 		return service.deleteFaculty(id);
 	}

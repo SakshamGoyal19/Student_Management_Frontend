@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.sagar.student_management_system.bean.Generate;
 import com.sagar.student_management_system.bean.Student;
 import com.sagar.student_management_system.repository.StudentRepository;
 
@@ -24,26 +26,32 @@ public class StudentService {
 			return repository.findById(id).get();
 		}
 		catch(NoSuchElementException ex) {
-			return null;
+			return new Student();
 		}
 	}
 	
-	public String addStudent(Student student) {
+	public boolean addStudent(Student student) {
 		
-		return "Your id is = "+ repository.insert(student).getId();
+		student.setId(Generate.generateID(student.getName()));
+		student.setPassword(Generate.generatePassword(student.getName()));
+		if(repository.existsById(student.getId()))
+			return false;
+		repository.insert(student);
+		return true;
 	}
 	
-	public String deleteStudent(String id) {
+	public boolean deleteStudent(String id) {
 		
-		if(!repository.existsById(id)) return "Not present";
+		if(!repository.existsById(id))
+			return false;
 		repository.deleteById(id);
-		return "Successfully deleted";
+		System.out.println("true");
+		return true;
 	}
 	
-	public String updateStudent(Student student) {
-		
-		if(!repository.existsById(student.getId())) return "Not present";
-		repository.save(student);
-		return "Successfully updated";
+	public boolean updateStudent(Student student) {
+		if(!repository.existsById(student.getId())) return false;
+	    repository.save(student);
+		return true;
 	}
 }

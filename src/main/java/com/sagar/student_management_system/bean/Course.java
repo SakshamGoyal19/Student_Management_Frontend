@@ -49,14 +49,4 @@ public class Course {
 		this.filledSeats = filledSeats;
 	}
 	
-	public Course(String id, String branch, int totalSeats, int filledSeats) {
-		
-		super();
-		this.id = id;
-		this.branch = branch;
-		this.totalSeats = totalSeats;
-		this.filledSeats = filledSeats;
-	}
-	
-	
 }

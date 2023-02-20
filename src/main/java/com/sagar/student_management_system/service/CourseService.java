@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sagar.student_management_system.bean.Course;
+import com.sagar.student_management_system.bean.Generate;
 import com.sagar.student_management_system.repository.CourseRepository;
 
 @Service
@@ -24,26 +25,30 @@ public class CourseService {
 			return repository.findById(id).get();
 		}
 		catch(NoSuchElementException ex) {
-			return null;
+			return new Course();
 		}
 	}
 	
-	public String addCourse(Course course) {
+	public boolean addCourse(Course course) {
 		
-		return "Your id is = "+ repository.insert(course).getId();
+		course.setId(Generate.generateID(course.getBranch()));
+		if(repository.existsById(course.getId()))
+			return false;
+		repository.insert(course);
+		return true;
 	}
 	
-	public String deleteCourse(String id) {
+	public boolean deleteCourse(String id) {
 		
-		if(!repository.existsById(id)) return "Not present";
+		if(!repository.existsById(id)) return false;
 		repository.deleteById(id);
-		return "Successfully deleted";
+		return true;
 	}
 	
-	public String updateCourse(Course course) {
+	public boolean updateCourse(Course course) {
 		
-		if(!repository.existsById(course.getId())) return "Not present";
+		if(!repository.existsById(course.getId())) return false;
 		repository.save(course);
-		return "Successfully updated";
+		return true;
 	}
 }

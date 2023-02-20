@@ -7,4 +7,10 @@ public class Generate {
 		String firstName = name.split(" ")[0];
 		return firstName + firstName.length();
 	}
+	
+    public static String generateID(String name) {
+		
+		String firstName = name.split(" ")[0];
+		return firstName + firstName.length()*firstName.length();
+	}
 }

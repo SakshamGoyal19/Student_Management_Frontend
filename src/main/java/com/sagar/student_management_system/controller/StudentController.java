@@ -2,6 +2,7 @@ package com.sagar.student_management_system.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,15 +17,12 @@ import com.sagar.student_management_system.service.StudentService;
 
 @RestController
 @RequestMapping("/student")
+@CrossOrigin("*")
 public class StudentController {
 	
 	@Autowired
 	private StudentService service;
-	
-	public StudentController() {
-		
-		System.out.println("Object is created");
-	}
+
 	
 	@GetMapping()
 	public List<Student> getStudents(){
@@ -39,19 +37,19 @@ public class StudentController {
 	}
 	
 	@PostMapping()
-	public String addStudent(@RequestBody Student student) {
+	public boolean addStudent(@RequestBody Student student) {
 		
 		return service.addStudent(student);
 	}
 	
 	@PutMapping()
-	public String updateStudent(@RequestBody Student student) {
+	public boolean updateStudent(@RequestBody Student student) {
 		
 		return service.updateStudent(student);
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteStudent(@PathVariable String id) {
+	public boolean deleteStudent(@PathVariable String id) {
 		
 		return service.deleteStudent(id);
 	}
